@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { CartItemType } from "../App";
 import { Wrapper } from "./CartItem.styles";
 
@@ -12,10 +12,12 @@ const CartItem: React.FC<Props> = ({ item, addToCart, removeFromCart }) => {
   return (
     <Wrapper>
       <div>
-        <h3>{item.title}</h3>
+        <Typography variant="h3">{item.title}</Typography>
         <div className="information">
-          <p>Price: ${item.price}</p>
-          <p>Total: ${(item.amount * item.price).toFixed(2)}</p>
+          <Typography variant="body1">Price: ${item.price}</Typography>
+          <Typography variant="body1">
+            Total: ${(item.amount * item.price).toFixed(2)}
+          </Typography>
         </div>
         <div className="button">
           <Button
@@ -26,7 +28,7 @@ const CartItem: React.FC<Props> = ({ item, addToCart, removeFromCart }) => {
           >
             -
           </Button>
-          <p>{item.amount}</p>
+          <Typography variant="body1">{item.amount}</Typography>
           <Button
             size="small"
             disableElevation

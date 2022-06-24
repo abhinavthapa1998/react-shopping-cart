@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { Drawer } from "@mui/material";
+import { Button, Drawer, Typography } from "@mui/material";
 import { LinearProgress } from "@mui/material";
 import { Grid } from "@mui/material";
 import { AddShoppingCart } from "@mui/icons-material";
@@ -18,18 +18,26 @@ export type CartItemType = {
   amount: number;
 };
 
-const getProducts = async (): Promise<CartItemType[]> => {
-  return await (
-    await fetch(" https://api.escuelajs.co/api/v1/products?offset=0&limit=20")
-  ).json();
-};
 const App = () => {
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const [cartItems, setCartItems] = useState([] as CartItemType[]);
-  const { data, isLoading, error } = useQuery<CartItemType[]>(
-    "products",
-    getProducts
-  );
+  const [offset, setOffset] = useState<number>(0);
+  const [data, setData] = useState<CartItemType[]>([]);
+  const isLoading = false;
+  const error = false;
+  const getProducts = async (): Promise<void> => {
+    const payload = await (
+      await fetch(
+        `https://api.escuelajs.co/api/v1/products?offset=${offset}&limit=20`
+      )
+    ).json();
+    setData(payload);
+  };
+  // const { data, isLoading, error } = useQuery<CartItemType[]>(
+  //   "products",
+  //   getProducts
+  // );
+
   const getTotalItems = (items: CartItemType[]) => {
     return items.reduce((acc: number, item) => acc + item.amount, 0);
   };
@@ -46,6 +54,7 @@ const App = () => {
       return [...prev, { ...clickedItem, amount: 1 }];
     });
   };
+
   const handleRemoveFromCart = (id: number) => {
     setCartItems((prev) =>
       prev.reduce((acc, item) => {
@@ -58,6 +67,22 @@ const App = () => {
       }, [] as CartItemType[])
     );
   };
+  const handlePage = (nav: string) => {
+    if (nav === "next") {
+      setOffset(offset + 20);
+    }
+    if (nav === "prev") {
+      if (offset >= 20) {
+        setOffset(offset - 20);
+      }
+      setOffset(0);
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+    window.scrollTo(0, 0);
+  }, [offset]);
 
   if (isLoading) {
     return <LinearProgress />;
@@ -81,11 +106,19 @@ const App = () => {
       </StyledButton>
       <Grid container spacing={3}>
         {data?.map((item) => (
-          <Grid item key={item.id} xs={12} sm={4}>
+          <Grid item key={item.id} xs={12} sm={4} md={2}>
             <Item item={item} handleAddToCart={handleAddToCart} />
           </Grid>
         ))}
       </Grid>
+      <div style={{ position: "relative", left: "50%" }}>
+        <Button onClick={() => handlePage("prev")} variant="contained">
+          Previous
+        </Button>
+        <Button onClick={() => handlePage("next")} variant="contained">
+          Next
+        </Button>
+      </div>
     </Wrapper>
   );
 };

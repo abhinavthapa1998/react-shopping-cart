@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { CartItemType } from "../App";
 import { Wrapper } from "./Item.styles";
 type Props = {
@@ -10,10 +10,10 @@ const Item: React.FC<Props> = ({ item, handleAddToCart }) => {
     <Wrapper>
       <img src={item.images[0]} alt={item.title} />
       <div>
-        <h3>{item.title}</h3>
-        <p>{item.category.name}</p>
-        <p>{item.description}</p>
-        <h3>${item.price}</h3>
+        <Typography variant="h6">{item.title}</Typography>
+        <Typography variant="body1">{item.category.name}</Typography>
+        <Typography variant="body2">{item.description}</Typography>
+        <Typography variant="h6">${item.price}</Typography>
       </div>
       <Button onClick={() => handleAddToCart(item)}>Add to Cart</Button>
     </Wrapper>
