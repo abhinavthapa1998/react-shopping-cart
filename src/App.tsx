@@ -111,7 +111,13 @@ const App = () => {
           </Grid>
         ))}
       </Grid>
-      <div style={{ position: "relative", left: "50%" }}>
+      <div
+        style={{
+          width: "max-content",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
         <Button onClick={() => handlePage("prev")} variant="contained">
           Previous
         </Button>
