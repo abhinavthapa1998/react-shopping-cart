@@ -17,7 +17,7 @@ const CartItem: React.FC = ({ item, addToCart, removeFromCart }) => {
           <p>Price: ${item.price}</p>
           <p>Total: ${(item.amount * item.price).toFixed(2)}</p>
         </div>
-        <div className="buttons">
+        <div className="button">
           <Button
             size="small"
             disableElevation
