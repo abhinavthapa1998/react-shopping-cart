@@ -7,6 +7,7 @@ import { AddShoppingCart } from "@mui/icons-material";
 import { Badge } from "@mui/material";
 import { StyledButton, Wrapper } from "./App.styles";
 import Item from "./Item/Item";
+import Cart from "./Cart/Cart";
 export type CartItemType = {
   id: number;
   category: string;
@@ -45,7 +46,11 @@ const App = () => {
   return (
     <Wrapper>
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
-        Cart Goes Here
+        <Cart
+          cartItems={cartItems}
+          addToCart={handleAddToCart}
+          removeFromCart={handleRemoveFromCart}
+        />
       </Drawer>
       <StyledButton onClick={() => setCartOpen(true)}>
         <Badge badgeContent={getTotalItems(cartItems)} color="error">
