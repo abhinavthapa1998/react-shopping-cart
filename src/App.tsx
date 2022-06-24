@@ -10,16 +10,18 @@ import Item from "./Item/Item";
 import Cart from "./Cart/Cart";
 export type CartItemType = {
   id: number;
-  category: string;
-  description: string;
-  image: string;
-  price: number;
   title: string;
+  price: number;
+  description: string;
+  category: any;
+  images: string[];
   amount: number;
 };
 
 const getProducts = async (): Promise<CartItemType[]> => {
-  return await (await fetch("https://fakestoreapi.com/products")).json();
+  return await (
+    await fetch(" https://api.escuelajs.co/api/v1/products?offset=0&limit=20")
+  ).json();
 };
 const App = () => {
   const [cartOpen, setCartOpen] = useState<boolean>(false);

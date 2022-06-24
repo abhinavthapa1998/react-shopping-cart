@@ -8,7 +8,7 @@ type Props = {
   removeFromCart: (id: number) => void;
 };
 
-const CartItem: React.FC = ({ item, addToCart, removeFromCart }) => {
+const CartItem: React.FC<Props> = ({ item, addToCart, removeFromCart }) => {
   return (
     <Wrapper>
       <div>
@@ -31,13 +31,13 @@ const CartItem: React.FC = ({ item, addToCart, removeFromCart }) => {
             size="small"
             disableElevation
             variant="contained"
-            onClick={() => addToCart(item.id)}
+            onClick={() => addToCart(item)}
           >
             +
           </Button>
         </div>
       </div>
-      <img src={item.image} alt={item.title} />
+      <img src={item.images[0]} alt={item.title} />
     </Wrapper>
   );
 };
